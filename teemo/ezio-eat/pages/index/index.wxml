@@ -1,0 +1,23 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <block>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <text class="user-motto">{{motto}}</text>
+
+      <text class="food-text">{{foodName}}</text>
+
+      <image class="food-img" src="{{foodImgUrl}}" />
+
+    </block>
+
+  </view>
+
+
+  <view class="usermotto">
+    <button bindtap="getEat"> {{sw}} </button>
+  </view>
+
+
+</view>

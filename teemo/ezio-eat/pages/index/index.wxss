@@ -1,0 +1,33 @@
+/**index.wxss**/
+.userinfo {
+  margin-top: -50rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+  font-size:100%;
+}
+
+.usermotto {
+  margin-top: 50px;
+  font-size:90%;
+}
+.food-text {
+  font-size:120%;
+  margin-top: 10px;
+  color:red;
+}
+.food-img{
+  width: 100px;
+  height: 100px;
+}
