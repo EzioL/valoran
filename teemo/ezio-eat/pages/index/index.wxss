@@ -28,6 +28,11 @@
   color:red;
 }
 .food-img{
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
+}
+.text-share {
+   margin-top: 36px;
+  color: #aaa;
+  font-size:50%;
 }
