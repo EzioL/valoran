@@ -21,26 +21,38 @@ Page({
     foods: [],
     food: "",
     pre_food: "",
+    share_desc: "转发即可看到食物的详细地址",
+    share_desc_ : "转发即可看到食物的详细地址"
   },
   //用户点击右上角分享
   onShareAppMessage: function () {
     var title;
     var desc;
+    var desc_;
     var imageUrl;
-    if ((this.data.frequency == this.data.pre_frequency) && this.data.pre_frequency  > 0){
+    if ((this.data.frequency == this.data.pre_frequency) && this.data.pre_frequency > 0) {
       //没随机 
       title = "想好一会去吃什么了嘛？"
       desc = "褐言的生活瞎指南或许可以解决这个宇宙难题~"
-    }else{
-      title = "要去吃" + this.data.foodName +"啦，有人一起嘛？";
-      desc = " 它在 " + this.data.pre_food.shop_name + " (" + this.data.pre_food.shop_address+")"
-      imageUrl = this.data.foodImgUrl;
+      desc_ = "转发即可看到食物的详细地址";
+    } else {
+      title = "要去吃" + this.data.foodName + "啦，有人一起嘛？";
+      desc = " 它在 " + this.data.pre_food.shop_name + " (" + this.data.pre_food.shop_address + ")";
+      desc_ = desc ;
     }
-    
+    var that= this;
+    console.log(that)
     return {
       title: title, // 分享标题
       desc: desc, // 分享描述
-      path: 'pages/index/index' // 分享路径
+      path: 'pages/index/index', // 分享路径
+      complete: function (res) {
+        // 转发成功
+        console.log(res)
+        that.setData({
+          share_desc: desc_,
+        })
+      },
     }
   },
   //事件处理函数
@@ -98,6 +110,9 @@ Page({
     })
   },
   getEat: function (e) {
+    this.setData({
+      share_desc: this.data.share_desc_
+    })
 
     if (!this.data.run && this.data.frequency > 0 && this.data.pre_frequency > 0) {
 
@@ -157,6 +172,7 @@ Page({
         })
       }
     }
+   
 
     if (this.data.frequency <= 0 && this.data.pre_frequency < 0) {
       wx.showToast({
@@ -167,7 +183,8 @@ Page({
     } else if (this.data.run) {
       getBingoFood(this)
     }
-
+    
+    
   }
 
 })

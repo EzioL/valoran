@@ -20,6 +20,6 @@
     <button bindtap="getEat"> {{sw}} </button>
    
   </view>
- <text class="text-share"> 转发即可看到食物的详细地址</text>
+ <text class="text-share">{{share_desc}} </text>
 
 </view>
