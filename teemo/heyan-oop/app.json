@@ -1,0 +1,42 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/hoodwink/hoodwink",
+    "pages/mine/mine",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#2196F3",
+    "navigationBarTitleText": "面向对象",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#3c414a",
+    "selectedColor": "#ff2661",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "font-size": "20px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "pages/index/imgs/index.png",
+        "selectedIconPath": "pages/index/imgs/index-select.png"
+      },
+      {
+        "pagePath": "pages/hoodwink/hoodwink",
+        "text": "相亲圈",
+        "iconPath": "pages/hoodwink/imgs/hoodwink.png",
+        "selectedIconPath": "pages/hoodwink/imgs/hoodwink-select.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "pages/mine/imgs/mine.png",
+        "selectedIconPath": "pages/mine/imgs/mine-select.png"
+      }
+    ]
+  }
+}
