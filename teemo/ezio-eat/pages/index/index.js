@@ -6,7 +6,7 @@ Page({
   data: {
     no_times: false,
     frequency: 7,
-    pre_frequency: 1,
+    pre_frequency: 7,
     hidden: false,
     latitude: 1.00,
     longitude: 2.00,
@@ -19,7 +19,41 @@ Page({
     list: ["馄饨", "拉面", "烩面", "热干面", "高贵沙县", "黄焖鸡米饭", "喝粥", "有家川菜", "花椒鱼"],
     shops: [],
     foods: [],
-    food: ""
+    food: "",
+    pre_food: "",
+    share_desc: "转发即可看到食物的详细地址",
+    share_desc_ : "转发即可看到食物的详细地址"
+  },
+  //用户点击右上角分享
+  onShareAppMessage: function () {
+    var title;
+    var desc;
+    var desc_;
+    var imageUrl;
+    if ((this.data.frequency == this.data.pre_frequency) && this.data.pre_frequency > 0) {
+      //没随机 
+      title = "想好一会去吃什么了嘛？"
+      desc = "褐言的生活瞎指南或许可以解决这个宇宙难题~"
+      desc_ = "转发即可看到食物的详细地址";
+    } else {
+      title = "要去吃" + this.data.foodName + "啦，有人一起嘛？";
+      desc = " 它在 " + this.data.pre_food.shop_name + " (" + this.data.pre_food.shop_address + ")";
+      desc_ = desc ;
+    }
+    var that= this;
+    console.log(that)
+    return {
+      title: title, // 分享标题
+      desc: desc, // 分享描述
+      path: 'pages/index/index', // 分享路径
+      complete: function (res) {
+        // 转发成功
+        console.log(res)
+        that.setData({
+          share_desc: desc_,
+        })
+      },
+    }
   },
   //事件处理函数
   bindViewTap: function () {
@@ -28,6 +62,15 @@ Page({
     })
   },
   onLoad: function () {
+    //野狗云测试数据绑定
+    /* app.todoRef.bindAsArray(this, 'todo', function (err) {
+       if (err != null) {
+         // 数据绑定失败，失败原因：err.message;
+       } else {
+         // 数据绑定成功
+       }
+     })*/
+
     //获取地理位置
     getLocation(this);
     //获取用户信息
@@ -67,6 +110,9 @@ Page({
     })
   },
   getEat: function (e) {
+    this.setData({
+      share_desc: this.data.share_desc_
+    })
 
     if (!this.data.run && this.data.frequency > 0 && this.data.pre_frequency > 0) {
 
@@ -85,14 +131,6 @@ Page({
         })
       }
     } else {
-
-      var path = this.data.food.image_path
-      var p1 = path.substring(0, 1)
-      var p2 = path.substring(1, 3)
-      var p3 = path.substring(3, path.length)
-      path = p1 + "/" + p2 + "/" + p3
-      var url = "http://fuss10.elemecdn.com/" + path + ".jpeg?imageMogr2/thumbnail/100x100/format/webp/quality/85"
-      console.log("url-->" + url)
       this.setData({
         run: false,
         sw: "不行，换一个",
@@ -110,13 +148,31 @@ Page({
           pre_frequency: 0,
         })
       }
-      if (this.data.pre_frequency >= 0 && this.data.frequency >= 0){
-        console.log("frequency-->" + this.data.frequency)
+      if (this.data.pre_frequency >= 0 && this.data.frequency >= 0) {
+        console.log("load img")
+        var path = this.data.food.image_path
+        var p1 = path.substring(0, 1)
+        var p2 = path.substring(1, 3)
+        var p3 = path.substring(3, path.length)
+        path = p1 + "/" + p2 + "/" + p3
+        var suffix = "png"
+        if (path.indexOf("jpeg") >= 0) {
+          suffix = "jpeg"
+        }
+        if (path.indexOf("png") >= 0) {
+          suffix = "png"
+        }
+        var url = "http://fuss10.elemecdn.com/" + path + "." + suffix + "?imageMogr2/thumbnail/240x240/format/webp/quality/85"
+        console.log("url-->" + url)
+        //点了停止 还会多循环一次 ~ ..
         this.setData({
+          foodName: this.data.pre_food.name,
           foodImgUrl: url
+
         })
       }
     }
+   
 
     if (this.data.frequency <= 0 && this.data.pre_frequency < 0) {
       wx.showToast({
@@ -124,10 +180,11 @@ Page({
         icon: "none",
         duration: 2000
       })
-    } else {
-      getElmFood(this)
+    } else if (this.data.run) {
+      getBingoFood(this)
     }
-
+    
+    
   }
 
 })
@@ -148,7 +205,7 @@ function getLocation(that) {
 
 function getElmShops(that) {
   wx.request({
-    url: 'https://www.ele.me/restapi/shopping/restaurants?limit=10&latitude=' + that.data.latitude + '&longitude=' + that.data.longitude + "&restaurant_category_ids%5B%5D=-100&sign=1516949807400&terminal=web",
+    url: 'https://www.ele.me/restapi/shopping/restaurants?limit=20&latitude=' + that.data.latitude + '&longitude=' + that.data.longitude + "&restaurant_category_ids%5B%5D=-100&sign=1516949807400&terminal=web",
     data: {},
     method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
     // header: {}, // 设置请求的 header
@@ -157,7 +214,7 @@ function getElmShops(that) {
       that.setData({
         shops: res.data
       })
-      getElmFoods(that, res.data)
+      getElmFoodData(that, res.data)
     },
     fail: function (res) {
       // fail
@@ -169,7 +226,7 @@ function getElmShops(that) {
   })
 }
 
-function getElmFoods(that, shops) {
+function getElmFoodData(that, shops) {
   var index = 1;
   for (var i = 1; i < shops.length; i++) {
     var shop = shops[i];
@@ -181,6 +238,13 @@ function getElmFoods(that, shops) {
       success: function (res) {
         // success
         if (res.data[0] != null) {
+          //把商家名字 地址写进去
+          var todoFoods = res.data[0].foods;
+          var shopx = shops[index];
+          for (var t = 0; t < todoFoods.length; t++) {
+            todoFoods[t].shop_name = shopx.name;
+            todoFoods[t].shop_address = shop.address;
+          }
           that.setData({
             foods: that.data.foods.concat(res.data[0].foods),
           });
@@ -205,28 +269,31 @@ function getElmFoods(that, shops) {
 }
 
 
-function getElmFood(that) {
-
-  console.log("getElmFood")
+function getBingoFood(that) {
+  console.log("bingo")
+  console.log("bingo run " + that.data.run)
   var size = that.data.foods.length;
   if (that.data.run) {
     setTimeout(function () {
       //要延时执行的代码
       var random = Math.round(Math.random() * size);
-      var foodx = that.data.foods[random]
-      console.log("ElmFood-->" + foodx.name)
+      var pre_food = that.data.food
+      var food = that.data.foods[random]
+      console.log("food-->" + food.name)
+      console.log("pre_food-->" + pre_food.name)
       that.setData({
-        foodName: foodx.name,
-        food: foodx
+        foodName: food.name,
+        food: food,
+        pre_food: pre_food
       })
-      getElmFood(that)
-    }, 100)
+      getBingoFood(that)
+    }, 120)
   }
 
 
 }
 
-
+//把数据乱序
 function shuffle(that) {
   var a = that.data.foods;
   var j, x, i;
