@@ -4,6 +4,8 @@ const app = getApp()
 
 Page({
   data: {
+    list: [],
+    hidden: false,
     motto: '相亲圈',
     userInfo: {},
     hasUserInfo: false,
@@ -52,3 +54,34 @@ Page({
     })
   }
 })
+
+
+
+/**
+ * 请求数据
+ * @param that Page的对象，用其进行数据的更新
+ * @param targetPage 请求的目标页码
+ */
+function requestData(that) {
+  wx.request({
+    url: 'http://v3.wufazhuce.com:8000/api/channel/movie/more/-1',
+    //url:api.MOVIE_MORE+targetPage+api.CONFIG,
+    data: {},
+    method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT
+    // header: {}, // 设置请求的 header
+    success: function (res) {
+      
+      that.setData({
+        items: that.data.items.concat(itemList),
+        hidden: true
+      });
+    },
+    fail: function (res) {
+      // fail
+      console.log("fail");
+    },
+    complete: function (res) {
+    
+    }
+  })
+}
