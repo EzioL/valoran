@@ -1,0 +1,33 @@
+<view class='content'>
+  <loading hidden="{{loadingHidden}}">
+    数据加载中
+  </loading>
+  <view  hidden="{{!loadingHidden}}">
+    <!--轮播图-->
+    <swiper class="swiper" indicator-dots="true" autoplay="true" interval="3000" duration="500">
+      <block wx:for="{{banner}}">
+        <swiper-item>
+          <image src="{{item.cover}}" class="slide-image" mode="aspectFill" />
+        </swiper-item>
+      </block>
+    </swiper>
+
+    <!--分类导航-->
+
+
+    <!--专题列表-->
+
+    <view class="topic-list">
+      <view class="topic" wx:for="{{topics}}">
+        <image src="{{item.cover}} " class="slide-image" />
+        <text class="topic-title">{{item.title}}</text>
+      </view>
+    </view>
+
+    <!--加载更多-->
+    <view class="load-more" hidden="{{loadMoreHidden}}" >
+      <view class="load-more-toast"> 数据加载中...</view>
+    </view>
+  </view>
+
+</view>

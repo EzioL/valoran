@@ -1,0 +1,3 @@
+<template name='load-more'>
+  <view class="text"> 数据加载中...</view>
+</template>

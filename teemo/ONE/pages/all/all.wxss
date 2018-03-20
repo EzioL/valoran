@@ -1,0 +1,46 @@
+.content{
+  background: #DEDEDE;
+}
+.swiper {
+  height: 420rpx;
+  width: 100%;
+}
+.swiper image {
+  height: 100%;
+  width: 100%;
+}
+
+.topic-list{
+  margin-top: 0.75em;
+}
+.topic{
+  background: #fff;
+  display: flex;
+  flex-direction:column;
+  padding: 1em;
+  margin-bottom: 0.75em;
+}
+.topic image {
+  height: 228px;
+  width: 100%;
+}
+.topic-title{
+ margin-top: 0.75em;
+ font-size: 1em;
+}
+
+
+.load-more{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em;
+  background: #fff;
+ 
+}
+
+
+.load-more-toast{
+  font-size: 0.625em;
+  color: #aaa;
+}

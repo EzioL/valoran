@@ -1,5 +1,6 @@
 package com.heyan;
 
+import com.heyan.processor.NCMProcessor;
 import com.heyan.processor.OOPPageProcessor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,20 @@ public class OopEliseApplication {
 
 
 	@Autowired
-	OOPPageProcessor mProcessor;
-
+	OOPPageProcessor oopPageProcessor;
+	@Autowired
+	NCMProcessor ncmProcessor;
 
 	@GetMapping("/index")
 	public String index() {
-		new Thread(() -> mProcessor.start(mProcessor)).start();
+		new Thread(() -> oopPageProcessor.start(oopPageProcessor)).start();
 		return "爬虫开启";
 	}
 
+	@GetMapping("/ncm")
+	public String ncm() {
+		new Thread(() -> ncmProcessor.start(ncmProcessor)).start();
+		return "网易云请求开启";
+	}
 
 }

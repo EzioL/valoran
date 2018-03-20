@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/one/one",
+    "pages/all/all",
+    "pages/me/me"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "独唱团Lite",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#3c414a",
+    "selectedColor": "#ff2661",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "font-size": "20px",
+    "list": [
+      {
+        "pagePath": "pages/one/one",
+        "iconPath": "pages/one/imgs/one_line.png",
+        "selectedIconPath": "pages/one/imgs/one_fill.png"
+      },
+      {
+        "pagePath": "pages/all/all",
+        "iconPath": "pages/all/imgs/all_line.png",
+        "selectedIconPath": "pages/all/imgs/all_fill.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "iconPath": "pages/me/imgs/me_line.png",
+        "selectedIconPath": "pages/me/imgs/me_fill.png"
+      }
+    ],
+    "position": "bottom"
+  }
+}
